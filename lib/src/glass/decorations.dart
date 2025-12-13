@@ -1,5 +1,6 @@
 // ============================================================================
 // lib/extensions/decorations.dart (COMPLETE ENHANCED VERSION)
+// Enterprise-grade with all deprecations fixed
 // ============================================================================
 
 import 'package:flutter/material.dart';
@@ -76,7 +77,7 @@ Decoration boxDecorationWithRoundedCorners({
   BoxShape boxShape = BoxShape.rectangle,
 }) {
   return BoxDecoration(
-    color: backgroundColor ?? cardLightColor, // Removed appStore.isDarkMode
+    color: backgroundColor ?? cardLightColor,
     borderRadius: boxShape == BoxShape.circle ? null : (borderRadius ?? radius()),
     gradient: gradient,
     border: border,
@@ -108,7 +109,7 @@ Decoration boxDecorationWithShadow({
           spreadRadius: spreadRadius,
           offset: offset,
         ),
-    color: backgroundColor ?? cardLightColor, // Removed appStore.isDarkMode
+    color: backgroundColor ?? cardLightColor,
     gradient: gradient,
     border: border,
     image: decorationImage,
@@ -129,12 +130,12 @@ Decoration boxDecorationRoundedWithShadow(
 }) {
   return BoxDecoration(
     boxShadow: defaultBoxShadow(
-      shadowColor: shadowColor ?? Colors.grey.withAlpha((0.065 * 255).round()),
+      shadowColor: shadowColor ?? Colors.grey.withValues(alpha: 0.065),
       blurRadius: blurRadius ?? defaultBlurRadius,
       spreadRadius: spreadRadius ?? defaultSpreadRadius,
       offset: offset,
     ),
-    color: backgroundColor ?? cardLightColor, // Removed appStore.isDarkMode
+    color: backgroundColor ?? cardLightColor,
     gradient: gradient,
     borderRadius: radius(radiusAll.toDouble()),
   );
@@ -149,7 +150,7 @@ List<BoxShadow> defaultBoxShadow({
 }) {
   return [
     BoxShadow(
-      color: shadowColor ?? Colors.grey.withAlpha((0.065 * 255).round()),
+      color: shadowColor ?? Colors.grey.withValues(alpha: 0.065),
       blurRadius: blurRadius ?? defaultBlurRadius,
       spreadRadius: spreadRadius ?? defaultSpreadRadius,
       offset: offset,
@@ -189,8 +190,7 @@ Decoration boxDecorationGlass(
   Border? border,
   List<BoxShadow>? boxShadow,
 }) {
-  final isDark = Theme.of(context).brightness == Brightness.dark; // Fixed
-  final brandColor = tintColor ?? ColorUtils.colorPrimary;
+  final isDark = Theme.of(context).brightness == Brightness.dark;
 
   // Define blur and opacity based on intensity
   double whiteOpacity;
@@ -216,20 +216,20 @@ Decoration boxDecorationGlass(
       begin: Alignment.topLeft,
       end: Alignment.bottomRight,
       colors: [
-        Colors.white.withOpacity(whiteOpacity),
-        Colors.white.withOpacity(whiteOpacity * 0.6),
+        Colors.white.withValues(alpha: whiteOpacity),
+        Colors.white.withValues(alpha: whiteOpacity * 0.6),
       ],
     ),
     borderRadius: borderRadius ?? radius(16),
     border: border ??
         Border.all(
-          color: Colors.white.withOpacity(borderOpacity),
+          color: Colors.white.withValues(alpha: borderOpacity),
           width: 1.5,
         ),
     boxShadow: boxShadow ??
         [
           BoxShadow(
-            color: Colors.black.withOpacity(0.08),
+            color: Colors.black.withValues(alpha: 0.08),
             blurRadius: 15,
             offset: const Offset(0, 6),
           ),
@@ -253,7 +253,7 @@ Decoration boxDecorationAppleGlass(
   BorderRadius? borderRadius,
   double? borderWidth,
 }) {
-  final isDark = Theme.of(context).brightness == Brightness.dark; // Fixed
+  final isDark = Theme.of(context).brightness == Brightness.dark;
   final brandColor = tintColor ?? ColorUtils.colorPrimary;
 
   return BoxDecoration(
@@ -262,30 +262,30 @@ Decoration boxDecorationAppleGlass(
       end: Alignment.bottomRight,
       colors: isDark
           ? [
-              brandColor.withOpacity(0.15),
-              brandColor.withOpacity(0.08),
-              Colors.white.withOpacity(0.05),
+              brandColor.withValues(alpha: 0.15),
+              brandColor.withValues(alpha: 0.08),
+              Colors.white.withValues(alpha: 0.05),
             ]
           : [
-              Colors.white.withOpacity(0.6),
-              brandColor.withOpacity(0.1),
-              Colors.white.withOpacity(0.3),
+              Colors.white.withValues(alpha: 0.6),
+              brandColor.withValues(alpha: 0.1),
+              Colors.white.withValues(alpha: 0.3),
             ],
       stops: const [0.0, 0.5, 1.0],
     ),
     borderRadius: borderRadius ?? radius(16),
     border: Border.all(
-      color: brandColor.withOpacity(isDark ? 0.3 : 0.2),
+      color: brandColor.withValues(alpha: isDark ? 0.3 : 0.2),
       width: borderWidth ?? 1.5,
     ),
     boxShadow: [
       BoxShadow(
-        color: Colors.black.withOpacity(0.08),
+        color: Colors.black.withValues(alpha: 0.08),
         blurRadius: 20,
         offset: const Offset(0, 10),
       ),
       BoxShadow(
-        color: brandColor.withOpacity(0.1),
+        color: brandColor.withValues(alpha: 0.1),
         blurRadius: 15,
         offset: const Offset(0, 5),
       ),
@@ -308,7 +308,7 @@ Decoration boxDecorationFrost(
   BorderRadius? borderRadius,
   double? borderWidth,
 }) {
-  final isDark = Theme.of(context).brightness == Brightness.dark; // Fixed
+  final isDark = Theme.of(context).brightness == Brightness.dark;
 
   return BoxDecoration(
     gradient: LinearGradient(
@@ -316,22 +316,22 @@ Decoration boxDecorationFrost(
       end: Alignment.bottomRight,
       colors: isDark
           ? [
-              Colors.white.withOpacity(0.1),
-              Colors.white.withOpacity(0.05),
+              Colors.white.withValues(alpha: 0.1),
+              Colors.white.withValues(alpha: 0.05),
             ]
           : [
-              Colors.white.withOpacity(0.3),
-              Colors.white.withOpacity(0.2),
+              Colors.white.withValues(alpha: 0.3),
+              Colors.white.withValues(alpha: 0.2),
             ],
     ),
     borderRadius: borderRadius ?? radius(16),
     border: Border.all(
-      color: Colors.white.withOpacity(isDark ? 0.15 : 0.4),
+      color: Colors.white.withValues(alpha: isDark ? 0.15 : 0.4),
       width: borderWidth ?? 1.5,
     ),
     boxShadow: [
       BoxShadow(
-        color: Colors.black.withOpacity(0.05),
+        color: Colors.black.withValues(alpha: 0.05),
         blurRadius: 10,
         offset: const Offset(0, 4),
       ),
@@ -354,7 +354,7 @@ Decoration boxDecorationCrystal(
   Color? tintColor,
   BorderRadius? borderRadius,
 }) {
-  final isDark = Theme.of(context).brightness == Brightness.dark; // Fixed
+  final isDark = Theme.of(context).brightness == Brightness.dark;
 
   return BoxDecoration(
     gradient: LinearGradient(
@@ -362,22 +362,22 @@ Decoration boxDecorationCrystal(
       end: Alignment.bottomRight,
       colors: isDark
           ? [
-              Colors.white.withOpacity(0.15),
-              Colors.white.withOpacity(0.08),
+              Colors.white.withValues(alpha: 0.15),
+              Colors.white.withValues(alpha: 0.08),
             ]
           : [
-              Colors.white.withOpacity(0.4),
-              Colors.white.withOpacity(0.2),
+              Colors.white.withValues(alpha: 0.4),
+              Colors.white.withValues(alpha: 0.2),
             ],
     ),
     borderRadius: borderRadius ?? radius(16),
     border: Border.all(
-      color: Colors.white.withOpacity(isDark ? 0.2 : 0.5),
+      color: Colors.white.withValues(alpha: isDark ? 0.2 : 0.5),
       width: 1.5,
     ),
     boxShadow: [
       BoxShadow(
-        color: Colors.black.withOpacity(0.08),
+        color: Colors.black.withValues(alpha: 0.08),
         blurRadius: 15,
         offset: const Offset(0, 6),
       ),
@@ -399,7 +399,7 @@ Decoration boxDecorationEthereal(
   BuildContext context, {
   BorderRadius? borderRadius,
 }) {
-  final isDark = Theme.of(context).brightness == Brightness.dark; // Fixed
+  final isDark = Theme.of(context).brightness == Brightness.dark;
 
   return BoxDecoration(
     gradient: LinearGradient(
@@ -407,22 +407,22 @@ Decoration boxDecorationEthereal(
       end: Alignment.bottomRight,
       colors: isDark
           ? [
-              Colors.white.withOpacity(0.08),
-              Colors.white.withOpacity(0.03),
+              Colors.white.withValues(alpha: 0.08),
+              Colors.white.withValues(alpha: 0.03),
             ]
           : [
-              Colors.white.withOpacity(0.25),
-              Colors.white.withOpacity(0.15),
+              Colors.white.withValues(alpha: 0.25),
+              Colors.white.withValues(alpha: 0.15),
             ],
     ),
     borderRadius: borderRadius ?? radius(16),
     border: Border.all(
-      color: Colors.white.withOpacity(isDark ? 0.15 : 0.4),
+      color: Colors.white.withValues(alpha: isDark ? 0.15 : 0.4),
       width: 1.0,
     ),
     boxShadow: [
       BoxShadow(
-        color: Colors.black.withOpacity(0.05),
+        color: Colors.black.withValues(alpha: 0.05),
         blurRadius: 10,
         offset: const Offset(0, 4),
       ),
